@@ -1,5 +1,6 @@
 ﻿using ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Abstract;
 using ASP.NET_Core_With_Mongo_Db.Dal;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +12,36 @@ namespace ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Concrete
 {
     public class WriterRepository : IWriterRepository, IEntityRepository<Writer>
     {
-        public Task Create(Writer model)
+        private readonly IMongoCollection<Writer> _mongoCollection;
+        public WriterRepository()
         {
-            throw new NotImplementedException();
+            var client = new MongoClient("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false");
+            var db = client.GetDatabase("MongoDBContext");
+            _mongoCollection = db.GetCollection<Writer>("Writers");
+        }
+        public async Task Create(Writer model)
+        {
+            await _mongoCollection.InsertOneAsync(model);
         }
 
-        public Task Delete(Writer model)
+        public async Task Delete(Writer model)
         {
-            throw new NotImplementedException();
+            await _mongoCollection.DeleteOneAsync(x => x.Id == model.Id);
         }
 
-        public Task<List<Writer>> GetAll()
+        public async Task<List<Writer>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _mongoCollection.Find(x => true).ToListAsync();
         }
 
-        public Task<Writer> GetById(Writer model)
+        public async Task<Writer> GetById(Writer model)
         {
-            throw new NotImplementedException();
+            return await _mongoCollection.Find(x => x.Id == model.Id).FirstOrDefaultAsync();
         }
 
-        public Task<Writer> Update(Writer Model)
+        public async Task<Writer> Update(Writer model)
         {
-            throw new NotImplementedException();
+            return await _mongoCollection.FindOneAndReplaceAsync(x => x.Id == model.Id, model);
         }
     }
 }
