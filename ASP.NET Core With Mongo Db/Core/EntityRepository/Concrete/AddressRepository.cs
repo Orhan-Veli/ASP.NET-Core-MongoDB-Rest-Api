@@ -1,5 +1,6 @@
 ﻿using ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Abstract;
 using ASP.NET_Core_With_Mongo_Db.Dal;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,9 @@ namespace ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Concrete
             await _mongoCollection.InsertOneAsync(model);
         }
 
-        public async Task Delete(Address model)
+        public async Task Delete(ObjectId objectId)
         {
-         await _mongoCollection.DeleteOneAsync(x=> x.Id == model.Id);            
+         await _mongoCollection.DeleteOneAsync(x=> x.Id == objectId);            
         }
 
         public async Task<List<Address>> GetAll()
@@ -35,9 +36,9 @@ namespace ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Concrete
            return await _mongoCollection.Find(x => true).ToListAsync();
         }
 
-        public async Task<Address> GetById(Address model)
+        public async Task<Address> GetById(ObjectId objectId)
         {
-            return await _mongoCollection.Find(x => x.Id == model.Id).FirstOrDefaultAsync();
+            return await _mongoCollection.Find(x => x.Id == objectId).FirstOrDefaultAsync();
         }
 
         public async Task<Address> Update(Address model)

@@ -18,8 +18,10 @@ namespace ASP.NET_Core_With_Mongo_Db.Dal
         [BsonElement("LastName")]
         [BsonRequired]
         public string LastName { get; set; }
-        [BsonElement("Address")]
+        [BsonIgnore]
+        
         public Address Address { get; set; }
+        public ObjectId AddressId { get; set; }
 
         [BsonDateTimeOptions(DateOnly = true)]
         public DateTime DateTime { get; set; }       

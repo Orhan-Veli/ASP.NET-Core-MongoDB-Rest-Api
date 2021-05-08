@@ -20,9 +20,12 @@ namespace ASP.NET_Core_With_Mongo_Db.Dal
         public string LastName { get; set; }
         [BsonDateTimeOptions(DateOnly = true)]
         public DateTime DateTime { get; set; }
-        [BsonElement("Address")]
+        [BsonIgnore]
         public Address Address { get; set; }
-        [BsonElement("Books")]
+        public ObjectId AddressId { get; set; }
+        [BsonIgnore]
         public List<Book> Books { get; set; }
+       
+        public List<ObjectId> BookIds { get; set; }
     }
 }

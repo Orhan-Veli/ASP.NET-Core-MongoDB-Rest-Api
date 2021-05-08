@@ -17,7 +17,8 @@ namespace ASP.NET_Core_With_Mongo_Db.Dal
         public string Name { get; set; }
         [BsonElement("Category")]
         public string Category { get; set; }
-        [BsonElement("Writer")]
+        [BsonIgnore]
         public Writer Writer { get; set; }
+        public  ObjectId WriterId { get; set; }
     }
 }

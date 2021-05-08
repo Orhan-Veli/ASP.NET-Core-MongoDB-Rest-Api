@@ -1,4 +1,5 @@
 ﻿using ASP.NET_Core_With_Mongo_Db.Dal;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,11 @@ namespace ASP.NET_Core_With_Mongo_Db.Business.Abstract
     {
         Task Create(Writer model);
 
-        Task Delete(Writer model);
+        Task Delete(ObjectId objectId);
 
         Task<Writer> Update(Writer model);
 
-        Task<Writer> GetById(Writer model);
+        Task<Writer> GetById(ObjectId objectId);
 
         Task<List<Writer>> GetAll();
     }
