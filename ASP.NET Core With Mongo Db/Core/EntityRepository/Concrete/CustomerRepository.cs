@@ -1,5 +1,6 @@
 ﻿using ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Abstract;
 using ASP.NET_Core_With_Mongo_Db.Dal;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +12,36 @@ namespace ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Concrete
 {
     public class CustomerRepository : ICustomerRepository, IEntityRepository<Customer>
     {
-        public Task Create(Customer model)
+        private readonly IMongoCollection<Customer> _mongoCollection;
+        public CustomerRepository()
         {
-            throw new NotImplementedException();
+            var client = new MongoClient("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false");
+            var db = client.GetDatabase("MongoDBContext");
+            _mongoCollection = db.GetCollection<Customer>("Customers");
+        }
+        public async Task Create(Customer model)
+        {
+            await _mongoCollection.InsertOneAsync(model);
         }
 
-        public Task Delete(Customer model)
+        public async Task Delete(Customer model)
         {
-            throw new NotImplementedException();
+            await _mongoCollection.DeleteOneAsync(x => x.Id == model.Id);
         }
 
-        public Task<List<Customer>> GetAll()
+        public async Task<List<Customer>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _mongoCollection.Find(x => true).ToListAsync();
         }
 
-        public Task<Customer> GetById(Customer model)
+        public async Task<Customer> GetById(Customer model)
         {
-            throw new NotImplementedException();
+            return await _mongoCollection.Find(x => x.Id == model.Id).FirstOrDefaultAsync();
         }
 
-        public Task<Customer> Update(Customer Model)
+        public async Task<Customer> Update(Customer model)
         {
-            throw new NotImplementedException();
+            return await _mongoCollection.FindOneAndReplaceAsync(x => x.Id == model.Id, model);
         }
     }
 }
