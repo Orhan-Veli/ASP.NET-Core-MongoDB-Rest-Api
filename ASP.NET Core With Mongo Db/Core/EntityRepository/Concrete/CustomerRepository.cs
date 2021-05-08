@@ -14,11 +14,13 @@ namespace ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Concrete
     public class CustomerRepository : ICustomerRepository, IEntityRepository<Customer>
     {
         private readonly IMongoCollection<Customer> _mongoCollection;
+        private readonly IMongoCollection<Address> _addressCollection;
         public CustomerRepository()
         {
             var client = new MongoClient("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false");
             var db = client.GetDatabase("MongoDBContext");
             _mongoCollection = db.GetCollection<Customer>("Customers");
+            _addressCollection = db.GetCollection<Address>("Address");
         }
         public async Task Create(Customer model)
         {
@@ -32,12 +34,22 @@ namespace ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Concrete
 
         public async Task<List<Customer>> GetAll()
         {
-            return await _mongoCollection.Find(x => true).ToListAsync();
+            var customers = await _mongoCollection.Find(x => true).ToListAsync();
+            foreach (var item in customers)
+            {
+                item.Address = await _addressCollection.Find(x => x.Id == item.AddressId).FirstOrDefaultAsync();
+            }
+            return customers;
         }
 
         public async Task<Customer> GetById(ObjectId objectId)
         {
-            return await _mongoCollection.Find(x => x.Id == objectId).FirstOrDefaultAsync();
+            var customer = await _mongoCollection.Find(x => x.Id == objectId).FirstOrDefaultAsync();
+            if (customer != null)
+            {
+                customer.Address = await _addressCollection.Find(x => x.Id == customer.AddressId).FirstOrDefaultAsync();
+            }
+            return customer;
         }
 
         public async Task<Customer> Update(Customer model)
