@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ASP.NET_Core_With_Mongo_Db.Business.Abstract
 {
-    interface IAddressService
+    public interface IAddressService
     {
         Task Create(Address model);
 

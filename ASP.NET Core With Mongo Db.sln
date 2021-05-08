@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.NET Core With Mongo Db", "ASP.NET Core With Mongo Db\ASP.NET Core With Mongo Db.csproj", "{6A8488FD-3850-492C-A813-84323DD40337}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.NET Core Rest Api", "ASP.NET Core Rest Api\ASP.NET Core Rest Api.csproj", "{0F74E08E-D83B-4012-96FC-E7499DECD40B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6A8488FD-3850-492C-A813-84323DD40337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A8488FD-3850-492C-A813-84323DD40337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A8488FD-3850-492C-A813-84323DD40337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F74E08E-D83B-4012-96FC-E7499DECD40B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F74E08E-D83B-4012-96FC-E7499DECD40B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F74E08E-D83B-4012-96FC-E7499DECD40B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F74E08E-D83B-4012-96FC-E7499DECD40B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

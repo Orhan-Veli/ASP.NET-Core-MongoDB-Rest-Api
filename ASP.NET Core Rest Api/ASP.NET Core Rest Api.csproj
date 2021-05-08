@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>ASP.NET_Core_Rest_Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Bson" Version="2.12.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ASP.NET Core With Mongo Db\ASP.NET Core With Mongo Db.csproj" />
+  </ItemGroup>
+
+
+</Project>
