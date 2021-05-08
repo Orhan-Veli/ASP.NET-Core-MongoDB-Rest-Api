@@ -172,6 +172,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\Abstract\IAddressService.cs" />
+    <Compile Include="Business\Abstract\IBookService.cs" />
+    <Compile Include="Business\Abstract\ICustomerService.cs" />
+    <Compile Include="Business\Abstract\IWriterService.cs" />
     <Compile Include="Core\EntityRepository\Abstract\IAddressRepository.cs" />
     <Compile Include="Core\EntityRepository\Abstract\IBookRepository.cs" />
     <Compile Include="Core\EntityRepository\Abstract\ICustomerRepository.cs" />
@@ -190,7 +194,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Business\" />
+    <Folder Include="Business\Concrete\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Compression\Snappy\lib\win\snappy32.dll" />
