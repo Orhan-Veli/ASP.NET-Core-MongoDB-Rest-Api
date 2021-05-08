@@ -19,29 +19,29 @@ namespace ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Concrete
             var db = client.GetDatabase("MongoDBContext");
             _mongoCollection = db.GetCollection<Book>("Books");
         }
-        public Task Create(Book model)
+        public async Task Create(Book model)
         {
-            throw new NotImplementedException();
+            await _mongoCollection.InsertOneAsync(model);
         }
 
-        public Task Delete(Book model)
+        public async Task Delete(Book model)
         {
-            throw new NotImplementedException();
+            await _mongoCollection.DeleteOneAsync(x => x.Id == model.Id);
         }
 
-        public Task<List<Book>> GetAll()
+        public async Task<List<Book>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _mongoCollection.Find(x => true).ToListAsync();
         }
 
-        public Task<Book> GetById(Book model)
+        public async Task<Book> GetById(Book model)
         {
-            throw new NotImplementedException();
+            return await _mongoCollection.Find(x => x.Id == model.Id).FirstOrDefaultAsync();
         }
 
-        public Task<Book> Update(Book Model)
+        public async Task<Book> Update(Book model)
         {
-            throw new NotImplementedException();
+            return await _mongoCollection.FindOneAndReplaceAsync(x => x.Id == model.Id, model);
         }
     }
 }
