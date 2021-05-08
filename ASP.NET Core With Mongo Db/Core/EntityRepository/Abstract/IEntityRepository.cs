@@ -13,11 +13,11 @@ namespace ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Abstract
     {
         Task Create(T model);
 
-        Task Delete(T model);
+        Task Delete(ObjectId objectId);
 
         Task<T> Update(T model);
 
-        Task<T> GetById(T model);
+        Task<T> GetById(ObjectId objectId);
 
         Task<List<T>> GetAll();
 
