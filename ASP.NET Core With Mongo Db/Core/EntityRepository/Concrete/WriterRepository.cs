@@ -27,10 +27,16 @@ namespace ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Concrete
 
         }
         public async Task Create(Writer model)
-        {
-            await _WriterCollection.InsertOneAsync(model);
+        {     
             await _AddressCollection.InsertOneAsync(model.Address);
+            model.AddressId = model.Address.Id;
+            await _WriterCollection.InsertOneAsync(model);
+            foreach (var item in model.Books)
+            {
+                item.WriterId = model.Id;
+            }
             await _bookCollection.InsertManyAsync(model.Books);
+                     
         }
 
         public async Task Delete(ObjectId objectId)

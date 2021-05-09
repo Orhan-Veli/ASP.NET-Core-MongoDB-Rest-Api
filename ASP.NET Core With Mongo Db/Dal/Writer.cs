@@ -25,7 +25,5 @@ namespace ASP.NET_Core_With_Mongo_Db.Dal
         public ObjectId AddressId { get; set; }
         [BsonIgnore]
         public List<Book> Books { get; set; }
-       
-        public List<ObjectId> BookIds { get; set; }
     }
 }
