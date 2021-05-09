@@ -19,7 +19,7 @@ namespace ASP.NET_Core_Rest_Api.Controllers
         {
             _writerService = writerService;
         }
-        [HttpPut("Create")]
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] Writer writer)
         {
             if (writer == null)
@@ -56,7 +56,7 @@ namespace ASP.NET_Core_Rest_Api.Controllers
             return Ok(results);
         }
 
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         public async Task<IActionResult> Update([FromBody] Writer writer)
         {
             if (writer == null)

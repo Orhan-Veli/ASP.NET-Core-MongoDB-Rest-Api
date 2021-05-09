@@ -1,4 +1,5 @@
 ﻿using ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Abstract;
+using ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.ConnectionModel.Abstract;
 using ASP.NET_Core_With_Mongo_Db.Dal;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -14,11 +15,11 @@ namespace ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Concrete
     public class AddressRepository : IAddressRepository, IEntityRepository<Address>
     {
         private readonly IMongoCollection<Address> _mongoCollection;
-        public AddressRepository()
+        public AddressRepository(ISimpleDatabaseSettings settings)
         {
-            var client = new MongoClient("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false");
-            var db = client.GetDatabase("MongoDBContext");
-            _mongoCollection = db.GetCollection<Address>("Addresses");
+            var client = new MongoClient(settings.ConnectionString);
+            var db = client.GetDatabase(settings.DatabaseName);
+            _mongoCollection = db.GetCollection<Address>(settings.AddressCollectionName);
         }
 
         public async Task Create(Address model)

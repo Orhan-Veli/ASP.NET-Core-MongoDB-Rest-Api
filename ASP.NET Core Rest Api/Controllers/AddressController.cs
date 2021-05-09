@@ -19,7 +19,7 @@ namespace ASP.NET_Core_Rest_Api.Controllers
         {
             _addressService = addressService;
         }
-        [HttpPut("{Create}")]
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] Address address)
         {
             if (address == null)
@@ -56,7 +56,7 @@ namespace ASP.NET_Core_Rest_Api.Controllers
             var results = await _addressService.GetAll();
             return Ok(results);
         }
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> Update([FromBody] Address address)
         {
             if (address == null)

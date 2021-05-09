@@ -19,7 +19,7 @@ namespace ASP.NET_Core_Rest_Api.Controllers
         {
             _customerService = customerService;
         }
-        [HttpPut("Create")]
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] Customer customer)
         {
             if (customer == null)
@@ -56,7 +56,7 @@ namespace ASP.NET_Core_Rest_Api.Controllers
             return Ok(results);
         }
 
-        [HttpPost("Update")]
+        [HttpPut]
         public async Task<IActionResult> Update([FromBody] Customer customer)
         {
             if (customer == null)

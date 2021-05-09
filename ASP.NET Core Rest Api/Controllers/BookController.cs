@@ -19,7 +19,7 @@ namespace ASP.NET_Core_Rest_Api.Controllers
         {
             _bookService = bookService;
         }
-        [HttpPut("Create")]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] Book book)
         {
             if (book == null)
@@ -56,7 +56,7 @@ namespace ASP.NET_Core_Rest_Api.Controllers
             return Ok(results);
         }
 
-        [HttpPost("Update")]
+        [HttpPut]
         public async Task<IActionResult> Update([FromBody] Book book)
         {
             if (book == null)

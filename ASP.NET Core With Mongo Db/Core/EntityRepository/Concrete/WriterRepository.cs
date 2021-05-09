@@ -1,4 +1,5 @@
 ﻿using ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Abstract;
+using ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.ConnectionModel.Abstract;
 using ASP.NET_Core_With_Mongo_Db.Dal;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -16,13 +17,13 @@ namespace ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Concrete
         private readonly IMongoCollection<Writer> _WriterCollection;
         private readonly IMongoCollection<Address> _AddressCollection;
         private readonly IMongoCollection<Book> _bookCollection;
-        public WriterRepository()
+        public WriterRepository(ISimpleDatabaseSettings settings)
         {
-            var client = new MongoClient("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false");
-            var db = client.GetDatabase("MongoDBContext");
-            _WriterCollection = db.GetCollection<Writer>("Writers");
-            _AddressCollection = db.GetCollection<Address>("Addresses");
-            _bookCollection = db.GetCollection<Book>("Books");
+            var client = new MongoClient(settings.ConnectionString);
+            var db = client.GetDatabase(settings.DatabaseName);
+            _WriterCollection = db.GetCollection<Writer>(settings.WriterCollectionName);
+            _AddressCollection = db.GetCollection<Address>(settings.AddressCollectionName);
+            _bookCollection = db.GetCollection<Book>(settings.BooksCollectionName);
 
         }
         public async Task Create(Writer model)

@@ -2,6 +2,8 @@ using ASP.NET_Core_With_Mongo_Db.Business.Abstract;
 using ASP.NET_Core_With_Mongo_Db.Business.Concrete;
 using ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Abstract;
 using ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.Concrete;
+using ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.ConnectionModel.Abstract;
+using ASP.NET_Core_With_Mongo_Db.Core.EntityRepository.ConnectionModel.Concrete;
 using ASP.NET_Core_With_Mongo_Db.Dal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,16 +33,29 @@ namespace ASP.NET_Core_Rest_Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+
+            services.Configure<SimpleDatabaseSettings>(
+                Configuration.GetSection(nameof(SimpleDatabaseSettings)));
+
+            services.AddSingleton<ISimpleDatabaseSettings>(sp =>
+            sp.GetRequiredService<IOptions<SimpleDatabaseSettings>>().Value);
+
+       
             services.AddControllers();
+            services.AddSingleton<IEntityRepository<Address>, AddressRepository>();
+            services.AddSingleton<IEntityRepository<Book>, BookRepository>();
+            services.AddSingleton<IEntityRepository<Customer>, CustomerRepository>();
+            services.AddSingleton<IEntityRepository<Writer>, WriterRepository>();
+
+
             services.AddSingleton<IAddressService, AddressService>();
             services.AddSingleton<IBookService, BookService>();
             services.AddSingleton<ICustomerService, CustomerService>();
             services.AddSingleton<IWriterService, WriterService>();
 
-            services.AddSingleton<IEntityRepository<Address>, AddressRepository>();
-            services.AddSingleton<IEntityRepository<Book>, BookRepository>();
-            services.AddSingleton<IEntityRepository<Customer>, CustomerRepository>();
-            services.AddSingleton<IEntityRepository<Writer>, WriterRepository>();
+          
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
